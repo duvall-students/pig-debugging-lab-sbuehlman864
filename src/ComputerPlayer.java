@@ -4,6 +4,8 @@ public class ComputerPlayer extends Player{
 	
 	public ComputerPlayer(){
 		super("R2D2");
+		//Cause: There was no code to set the name of the computer player.
+		myName = "R2D2";
 	}
 
 	@Override

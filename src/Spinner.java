@@ -33,7 +33,11 @@ public class Spinner {
 			}
 			else{
 				low = high;
-				index++;
+				//index++;
+				// Cause: The code allowed for a continuous increase of the index larger than the probabilities array length.
+				while(index < probabilities.length-1) {
+					index++;
+				}
 			}
 		}
 		return result;

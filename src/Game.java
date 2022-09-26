@@ -5,12 +5,18 @@ public class Game {
 	private Player player2;
 	private Random die;
 	private Spinner spinner;
-	private final String LOSER_SPIN = "grunt";
+//	private final String LOSER_SPIN = "grunt";
+	//Cause: The variable name "grunt" did not match for "GRUNT", therefore causing the code to not recognize and update the scores.
+	private final String LOSER_SPIN = "GRUNT";
 	private final int LOSER_ROLL = 1;
 	
 	public Game(){
-		Player player1 = new GUIPlayer();
-		Player player2 = new ComputerPlayer();
+//		Player player1 = new GUIPlayer();
+//		Player player2 = new ComputerPlayer();
+		// Cause: Player 1 and Player 2 are initialized as players and then made again as player objects.
+		// Correct code below:
+		player1 = new GUIPlayer();
+		player2 = new ComputerPlayer();
 		die = new Random();
 		spinner = new Spinner();
 	}
@@ -48,12 +54,19 @@ public class Game {
 		boolean keepGoing = true;
 		printStartRoundMessage(whoseTurn);
 		while(keepGoing){
-			int roll = die.nextInt(7);
+			//int roll = die.nextInt(7);
+			//Cause: The nextInt method gives values between 0 and 6, therefore there is a chance to roll a 0.
+			int roll = die.nextInt(6) + 1;
 			String spin = spinner.spin();
 			System.out.println(roll+ " "+ spin);
 			
 			if(roll == LOSER_ROLL){
 				System.out.println("Lose a turn.");
+				//Cause: The above if statement accounted for rolling a 1, however it did not take into consideration checking for a grunt.
+				if(spin == LOSER_SPIN.toUpperCase()){
+					System.out.println("Too bad!  Lose all your points.");
+					whoseTurn.resetScore();
+				}
 				return 0;
 			}
 			else if(spin == LOSER_SPIN.toUpperCase()){
@@ -72,7 +85,9 @@ public class Game {
 	
 	// True if one of the players has won the game.
 	public boolean winner(){
-		return player1.hasWon() && player2.hasWon();
+		//return player1.hasWon() && player2.hasWon();
+		// Cause: The previous code needed both players to have "won" by reaching 100 points. We only need to check for one player.
+		return player1.hasWon() || player2.hasWon();
 	}
 	
 	/* 
